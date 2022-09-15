@@ -11,21 +11,31 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2+v=l7nhb&%@$@7*r9&$02c$djh)%91@p9=hn74(zm__8wr8@='
+# set the debug state defined in the DEBUG env variable. defaults to False,
+DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# set the secret variable defined. If not in debug mode and an insecure value is
+# set, django won't start
+SECRET_KEY = os.environ.get("SECRET_KEY", "insecure")
+if not DEBUG and "insecure" in SECRET_KEY:
+    raise Exception(
+        "Insecure or missing SECRET_KEY environment variable. \n"
+        "Enable debug mode or set the SECRET_KEY env to a secure random value"
+    )
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = [
+    # WARNING insecure configuration
+    "*"
+]
 
 
 # Application definition

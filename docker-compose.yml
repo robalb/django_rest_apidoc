@@ -1,0 +1,18 @@
+# This is the compose file for the development of the django demoapp
+version: "3.9"
+services:
+  #Django service
+  django:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.dev
+    volumes:
+      - ./demoapp:/demoapp
+    ports:
+      - 8000:8000
+    restart: on-failure
+    environment:
+      SECRET_KEY: ${DJANGO_SECRET_KEY}
+      # set to false in production environmens
+      DEBUG: "true"
+    command: python manage.py runserver 0.0.0.0:8000

@@ -1,0 +1,13 @@
+# Development api Dockerfile
+FROM python:3.9
+
+WORKDIR /demoapp
+
+# We move and install the requirements before the rest of the code, therefore
+# maximizing the usage of the docker cache.
+# The --upgrade flag should not be used in a production environment.
+COPY demoapp/requirements.txt /demoapp/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /demoapp/requirements.txt
+
+# we run the app server
+#CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--reload"]
