@@ -54,6 +54,8 @@ class GuestnoteList(APIView):
 
 class GuestnoteList2(generics.GenericAPIView):
     serializer_class = GuestnoteModelSerializer
+    queryset = Guestnote.objects.all()
+
     """
     list all guestnotes or generate a new one
     """
