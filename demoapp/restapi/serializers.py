@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from snippets.models import Guestnote, LANGUAGE_CHOICES
+from restapi.models import Guestnote, LANGUAGE_CHOICES
 
 
 class GuestnoteSerializer(serializers.Serializer):

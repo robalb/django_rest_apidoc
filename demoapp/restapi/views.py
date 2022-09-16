@@ -2,8 +2,8 @@ from django.shortcuts import render
 
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from snippets.models import Guestnote
-from snippets.serializers import GuestnoteModelSerializer
+from restapi.models import Guestnote
+from restapi.serializers import GuestnoteModelSerializer
 
 from rest_framework.views import APIView
 from rest_framework import status
