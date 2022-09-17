@@ -1,0 +1,15 @@
+# Development api Dockerfile
+FROM python:3.9
+
+WORKDIR /demoapp
+
+# We move and install the requirements before the rest of the code, therefore
+# maximizing the usage of the docker cache.
+COPY demoapp/requirements.txt /demoapp/requirements.txt
+RUN pip install --no-cache-dir -r /demoapp/requirements.txt
+
+COPY ./demoapp/ /demoapp
+
+ENV DEBUG=false
+
+CMD ["gunicorn", "--bind", ":8000", "demoapp.wsgi"]
