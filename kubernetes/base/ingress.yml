@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demoapp
+spec:
+  rules:
+  - host: "halb.it"
+    http:
+      paths:
+      # Path-based routing settings:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: demoapp
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - "demoapp.halb.it"
+    secretName: demoapp-cert  #name of the tls secret. Make sure this is defined first
