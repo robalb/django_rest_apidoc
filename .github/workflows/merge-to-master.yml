@@ -76,9 +76,15 @@ jobs:
         with:
           valueFile: 'kubernetes/base/deployment.yaml'
           propertyPath: 'spec.template.spec.containers[0].image'
-          value: ghcr.io/robalb/django_rest_apidoc:sha-${{ github.sha }}
+          value: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
           updateFile: true
           commitChange: false
+
+      #- name: generate openapi documentation
+      #TODO
+      # run: |
+      #docker run -t ${{ env.IMAGE_NAME }}:sha-${{ github.sha }} python manage.py generateschema -f openapitest.yaml
+
 
       - name: Commit changes
         run: |
