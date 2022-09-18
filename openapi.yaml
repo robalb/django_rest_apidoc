@@ -1,7 +1,9 @@
 openapi: 3.0.2
 info:
-  title: ''
-  version: ''
+  title: Demoapp DRF
+  version: sha-b3d4570876a69bee6363b9c35041ca213c4a4922
+  description: A simple rest api written using DRF, with the goal of testing it's
+    introspection algoritm
 paths:
   /guestnotes/:
     get:
