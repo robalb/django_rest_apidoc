@@ -28,6 +28,7 @@ For customizations that you want to apply across the entire API, you can subclas
 https://github.com/tfranzel/drf-spectacular
 
 
+
 # usage
 
 ## migrations
