@@ -100,7 +100,7 @@ jobs:
         run: |
           docker images
           docker run --rm --env="DEBUG=true" ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} \
-           python manage.py generateschema > openapi.yaml
+           python manage.py openapischema --apiversion sha-${{ github.sha }} > openapi.yaml
 
       - name: Commit changes
         run: |

@@ -37,6 +37,12 @@ ALLOWED_HOSTS = [
     "*"
 ]
 
+# Openapi generation configuration
+OPENAPI = {
+    "title": "Demoapp DRF",
+    "description": "A simple rest api written using DRF, with the goal of testing it's introspection algoritm",
+    "version": "1.0.0"
+}
 
 # Application definition
 
