@@ -80,10 +80,10 @@ jobs:
           updateFile: true
           commitChange: false
 
-      #- name: generate openapi documentation
-      #TODO
-      # run: |
-      #docker run -t ${{ env.IMAGE_NAME }}:sha-${{ github.sha }} python manage.py generateschema -f openapitest.yaml
+      - name: generate openapi documentation
+        run: |
+          docker images
+          docker run -t ${{ env.IMAGE_NAME }}:sha-${{ github.sha }} python manage.py generateschema > openapi.yaml
 
 
       - name: Commit changes
