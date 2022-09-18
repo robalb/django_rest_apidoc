@@ -21,7 +21,6 @@ def __parse_source_config(title="", description="", version="1.0.0") -> OpenApiC
 def get_config() -> OpenApiConfig:
     """ Returns the global openapi configuration, as set in django settings
     """
-
     try:
         settings_source = settings.OPENAPI
     except AttributeError:
