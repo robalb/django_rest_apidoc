@@ -66,6 +66,7 @@ jobs:
           context: .
           file: ./docker/Dockerfile.prod
           push: true
+          load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -88,9 +89,9 @@ jobs:
       - name: generate openapi documentation
         uses: addnab/docker-run-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          # registry: ${{ env.REGISTRY }}
+          # username: ${{ github.actor }}
+          # password: ${{ secrets.GITHUB_TOKEN }}
           image: ${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
           run: python manage.py generateschema > openapi.yaml
 
