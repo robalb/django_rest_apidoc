@@ -80,10 +80,16 @@ jobs:
           updateFile: true
           commitChange: false
 
+      # - name: generate openapi documentation
+      #   run: |
+      #     docker images
+      #     docker run -t ${{ env.IMAGE_NAME }}:sha-${{ github.sha }} python manage.py generateschema > openapi.yaml
+
       - name: generate openapi documentation
-        run: |
-          docker images
-          docker run -t ${{ env.IMAGE_NAME }}:sha-${{ github.sha }} python manage.py generateschema > openapi.yaml
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+          run: python manage.py generateschema > openapi.yaml
 
 
       - name: Commit changes
