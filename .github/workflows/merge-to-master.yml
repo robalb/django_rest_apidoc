@@ -94,16 +94,7 @@ jobs:
       - name: generate openapi documentation
         run: |
           docker images
-          docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} python manage.py generateschema > openapi.yaml
-
-      # - name: generate openapi documentation
-      #   uses: addnab/docker-run-action@v3
-      #   with:
-      #     # registry: ${{ env.REGISTRY }}
-      #     # username: ${{ github.actor }}
-      #     # password: ${{ secrets.GITHUB_TOKEN }}
-      #     image: ${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
-      #     run: python manage.py generateschema > openapi.yaml
+          docker run --rm --env="DEBUG=true" ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} python manage.py generateschema > openapi.yaml
 
 
       - name: Commit changes
