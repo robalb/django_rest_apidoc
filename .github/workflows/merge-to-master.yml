@@ -66,7 +66,6 @@ jobs:
           context: .
           file: ./docker/Dockerfile.prod
           push: true
-          load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -81,19 +80,30 @@ jobs:
           updateFile: true
           commitChange: false
 
-      # - name: generate openapi documentation
-      #   run: |
-      #     docker images
-      #     docker run -t ${{ env.IMAGE_NAME }}:sha-${{ github.sha }} python manage.py generateschema > openapi.yaml
+      - name: Build and load Docker image into docker
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          file: ./docker/Dockerfile.prod
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
 
       - name: generate openapi documentation
-        uses: addnab/docker-run-action@v3
-        with:
-          # registry: ${{ env.REGISTRY }}
-          # username: ${{ github.actor }}
-          # password: ${{ secrets.GITHUB_TOKEN }}
-          image: ${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
-          run: python manage.py generateschema > openapi.yaml
+        run: |
+          docker images
+          docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} python manage.py generateschema > openapi.yaml
+
+      # - name: generate openapi documentation
+      #   uses: addnab/docker-run-action@v3
+      #   with:
+      #     # registry: ${{ env.REGISTRY }}
+      #     # username: ${{ github.actor }}
+      #     # password: ${{ secrets.GITHUB_TOKEN }}
+      #     image: ${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+      #     run: python manage.py generateschema > openapi.yaml
 
 
       - name: Commit changes
