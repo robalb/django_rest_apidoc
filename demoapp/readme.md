@@ -31,7 +31,6 @@ https://github.com/tfranzel/drf-spectacular
 
 
 
-
 # usage
 
 ## migrations
