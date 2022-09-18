@@ -88,7 +88,7 @@ jobs:
       - name: generate openapi documentation
         uses: addnab/docker-run-action@v3
         with:
-          image: ${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           run: python manage.py generateschema > openapi.yaml
 
 
