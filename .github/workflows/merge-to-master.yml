@@ -94,14 +94,16 @@ jobs:
       - name: generate openapi documentation
         run: |
           docker images
-          docker run --rm --env="DEBUG=true" ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} python manage.py generateschema > openapi.yaml
+          docker run --rm --env="DEBUG=true" ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${{ github.sha }} \
+           python manage.py generateschema > openapi.yaml
 
 
       - name: Commit changes
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git commit -am "Updated image tags in the app manifests"
+          git add --all
+          git commit -am "Updated image tags in the app manifests, updated openapi docs"
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
