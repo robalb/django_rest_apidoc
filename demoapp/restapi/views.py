@@ -11,26 +11,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics
 
-"""
-@api_view(['GET', 'POST'])
-def guestnote_list(request, format=None):
-    if request.method == 'GET':
-        snippets = Guestnote.objects.all()
-        serializer = GuestnoteModelSerializer(snippets, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = GuestnoteModelSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-"""
-
-
-class GuestnoteList(APIView):
+# DRF APIView class ---> No introspection available
+class GuestnoteList1(APIView):
     """
     list all guestnotes or generate a new one
+
+    No introspection
     """
     def get(self, request, format=None):
         """
@@ -52,13 +38,17 @@ class GuestnoteList(APIView):
 
 
 
+# APIVIew class has been replaced with generics class, introspection
+# is available via serializer_class and queryset
 class GuestnoteList2(generics.GenericAPIView):
+    """
+    list all guestnotes or generate a new one
+
+    Manual introspection
+    """
     serializer_class = GuestnoteModelSerializer
     queryset = Guestnote.objects.all()
 
-    """
-    list all guestnotes or generate a new one
-    """
     def get(self, request, format=None):
         """
         List all guestnotes
@@ -78,16 +68,25 @@ class GuestnoteList2(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# DRF mixin generics class -> Good introspection available by default
 class GuestnoteList3(generics.ListCreateAPIView):
+    """
+    list all guestnotes or generate a new one
+
+    Automatic introspection
+    """
     queryset = Guestnote.objects.all()
     serializer_class = GuestnoteModelSerializer
 
 
 
+# DRF default @api_view decorator ---> No introspection available
 @api_view(['GET', 'PUT', 'DELETE'])
 def guestnote_detail(request, pk, format=None):
     """
     Retrieve, update or delete a guest note.
+
+    No introspection
     """
     try:
         snippet = Guestnote.objects.get(pk=pk)

@@ -3,7 +3,6 @@ from django.utils.module_loading import import_string
 
 from rest_framework import renderers
 from rest_framework.schemas.openapi import SchemaGenerator
-
 from restapi.openapi.core import get_config
 
 
@@ -13,7 +12,7 @@ class Command(BaseCommand):
     https://github.com/encode/django-rest-framework/rest_framework/management/commands/generateschema.py
 
     The legacy coreapi options have been removed, and support for specifying the api version
-    has been added via the --version argument
+    has been added via the --apiversion argument
 
     """
     help = "A fine-tuned version of DRF generateschema"
