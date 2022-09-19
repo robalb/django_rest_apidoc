@@ -1,3 +1,10 @@
+"""
+Test api views.
+These views are all very similar, but they are all implemented in different ways.
+The introspection issues related to each implementation are discussed in the comments.
+
+Check out GuestnoteList4 to see the custom introspection system in action
+"""
 from django.shortcuts import render
 
 from django.views.decorators.csrf import csrf_exempt
@@ -68,6 +75,7 @@ class GuestnoteList2(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
 # DRF mixin generics class -> Good introspection available by default
 class GuestnoteList3(generics.ListCreateAPIView):
     """
@@ -77,6 +85,40 @@ class GuestnoteList3(generics.ListCreateAPIView):
     """
     queryset = Guestnote.objects.all()
     serializer_class = GuestnoteModelSerializer
+
+
+
+# Introspection available thanks to custom introspection code defined in restapi.openapi.core
+# Quick Overview:
+# - The request serializer of every method is detected by inspecting the type annotation
+#   of the "request" parameter. In this case, request: GuestnoteModelSerializer
+# - The response serializer is recognized by inspecting the default value of an additional
+#   response_model parameter, added to the request methods.
+
+class GuestnoteList4(APIView):
+    """
+    list all guestnotes or generate a new one
+
+    FastAPI- inspired custom introspection
+    """
+
+    def get(self, request: GuestnoteModelSerializer, format=None, response_model=GuestnoteModelSerializer):
+        """
+        List all guestnotes
+        """
+        snippets = Guestnote.objects.all()
+        serializer = GuestnoteModelSerializer(snippets, many=True)
+        return Response(serializer.data)
+
+    def post(self, request: GuestnoteModelSerializer, format=None, response_model=GuestnoteModelSerializer):
+        """
+        Generate a new guestnote
+        """
+        serializer = GuestnoteModelSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
