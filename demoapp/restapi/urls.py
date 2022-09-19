@@ -5,7 +5,9 @@ from restapi.openapi.core import get_schema_view
 
 urlpatterns = [
     # Rest API endpoints
-    path('guestnotes/', views.GuestnoteList2.as_view()),
+    path('guestnotes1/', views.GuestnoteList1.as_view()),
+    path('guestnotes2/', views.GuestnoteList2.as_view()),
+    path('guestnotes3/', views.GuestnoteList3.as_view()),
     path('guestnotes/<int:pk>/', views.guestnote_detail),
 
     # Live openapi specification yaml

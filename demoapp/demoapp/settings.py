@@ -16,14 +16,11 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
 # set the debug state defined in the DEBUG env variable. defaults to False,
 DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
 
-# set the secret variable defined. If not in debug mode and an insecure value is
-# set, django won't start
+# set the secret variable defined in the SECRET_KEY env variable.
+# If not in debug mode and an insecure value is provided, django won't start
 SECRET_KEY = os.environ.get("SECRET_KEY", "insecure")
 if not DEBUG and "insecure" in SECRET_KEY:
     raise Exception(
@@ -40,7 +37,7 @@ ALLOWED_HOSTS = [
 # Openapi generation configuration
 OPENAPI = {
     "title": "Demoapp DRF",
-    "description": "A simple rest api written using DRF, with the goal of testing it's introspection algoritm",
+    "description": "A simple rest api written using DRF, with the goal of testing it's introspection algorithm",
     "version": "1.0.0"
 }
 
