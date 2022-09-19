@@ -1,11 +1,46 @@
 openapi: 3.0.2
 info:
   title: Demoapp DRF
-  version: sha-0cd648e5830d5d76b4f721e7168c12eb1967b1c2
+  version: sha-a25741c1413e8eacac9bc963decf442dea909998
   description: A simple rest api written using DRF, with the goal of testing it's
-    introspection algoritm
+    introspection algorithm
 paths:
-  /guestnotes/:
+  /guestnotes1/:
+    get:
+      operationId: listGuestnoteList1s
+      description: List all guestnotes
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - guestnotes1
+    post:
+      operationId: createGuestnoteList1
+      description: Generate a new guestnote
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - guestnotes1
+  /guestnotes2/:
     get:
       operationId: listGuestnotes
       description: List all guestnotes
@@ -20,7 +55,7 @@ paths:
                   $ref: '#/components/schemas/GuestnoteModel'
           description: ''
       tags:
-      - guestnotes
+      - guestnotes2
     post:
       operationId: createGuestnote
       description: Generate a new guestnote
@@ -44,11 +79,60 @@ paths:
                 $ref: '#/components/schemas/GuestnoteModel'
           description: ''
       tags:
-      - guestnotes
+      - guestnotes2
+  /guestnotes3/:
+    get:
+      operationId: listGuestnotes
+      description: 'list all guestnotes or generate a new one
+
+
+        Automatic introspection'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GuestnoteModel'
+          description: ''
+      tags:
+      - guestnotes3
+    post:
+      operationId: createGuestnote
+      description: 'list all guestnotes or generate a new one
+
+
+        Automatic introspection'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuestnoteModel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GuestnoteModel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GuestnoteModel'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuestnoteModel'
+          description: ''
+      tags:
+      - guestnotes3
   /guestnotes/{id}/:
     get:
       operationId: retrieveguestnote_detail
-      description: Retrieve, update or delete a guest note.
+      description: 'Retrieve, update or delete a guest note.
+
+
+        No introspection'
       parameters:
       - name: id
         in: path
@@ -66,7 +150,10 @@ paths:
       - guestnotes
     put:
       operationId: updateguestnote_detail
-      description: Retrieve, update or delete a guest note.
+      description: 'Retrieve, update or delete a guest note.
+
+
+        No introspection'
       parameters:
       - name: id
         in: path
@@ -92,7 +179,10 @@ paths:
       - guestnotes
     delete:
       operationId: destroyguestnote_detail
-      description: Retrieve, update or delete a guest note.
+      description: 'Retrieve, update or delete a guest note.
+
+
+        No introspection'
       parameters:
       - name: id
         in: path
