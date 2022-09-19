@@ -1,0 +1,139 @@
+openapi: 3.0.2
+info:
+  title: Demoapp DRF
+  version: 1.0.0
+  description: A simple rest api written using DRF, with the goal of testing it's
+    introspection algorithm
+paths:
+  /guestnotes/:
+    get:
+      operationId: listGuestnoteList4s
+      description: List all guestnotes
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GuestnoteModel'
+          description: ''
+      tags:
+      - guestnotes
+    post:
+      operationId: createGuestnoteList4
+      description: Generate a new guestnote
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GuestnoteModel'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GuestnoteModel'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GuestnoteModel'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuestnoteModel'
+          description: ''
+      tags:
+      - guestnotes
+  /guestnotes/{id}/:
+    get:
+      operationId: retrieveguestnote_detail
+      description: 'Retrieve, update or delete a guest note.
+
+
+        No introspection'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - guestnotes
+    put:
+      operationId: updateguestnote_detail
+      description: 'Retrieve, update or delete a guest note.
+
+
+        No introspection'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - guestnotes
+    delete:
+      operationId: destroyguestnote_detail
+      description: 'Retrieve, update or delete a guest note.
+
+
+        No introspection'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - guestnotes
+components:
+  schemas:
+    GuestnoteModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+        note:
+          type: string
+        like_tiangolo:
+          type: boolean
+        language:
+          enum:
+          - python
+          - not_python
+          - not_not_python
+          type: string
+      required:
+      - note

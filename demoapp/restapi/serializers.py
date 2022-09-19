@@ -28,6 +28,10 @@ class GuestnoteSerializer(serializers.Serializer):
 
 
 class GuestnoteModelSerializer(serializers.ModelSerializer):
+  title = serializers.SerializerMethodField()
   class Meta:
     model = Guestnote
     fields = ['id', 'title', 'note', 'like_tiangolo', 'language']
+
+  def get_title(self, obj) -> int:
+    return 42
