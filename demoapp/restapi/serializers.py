@@ -33,5 +33,5 @@ class GuestnoteModelSerializer(serializers.ModelSerializer):
     model = Guestnote
     fields = ['id', 'title', 'note', 'like_tiangolo', 'language']
 
-  def get_title(self, obj) -> int:
+  def get_title(self, obj):
     return 42

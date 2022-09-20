@@ -94,7 +94,6 @@ class GuestnoteList3(generics.ListCreateAPIView):
 #   of the "request" parameter. In this case, request: GuestnoteModelSerializer
 # - The response serializer is recognized by inspecting the default value of an additional
 #   response_model parameter, added to the request methods.
-
 class GuestnoteList4(APIView):
     """
     list all guestnotes or generate a new one
@@ -102,7 +101,7 @@ class GuestnoteList4(APIView):
     FastAPI- inspired custom introspection
     """
 
-    def get(self, request: GuestnoteModelSerializer, format=None, response_model=GuestnoteModelSerializer):
+    def get(self, request, format=None, response_model=GuestnoteModelSerializer):
         """
         List all guestnotes
         """
