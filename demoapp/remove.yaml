@@ -28,11 +28,14 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: {}
+            schema:
+              $ref: '#/components/schemas/GuestnoteModel'
           application/x-www-form-urlencoded:
-            schema: {}
+            schema:
+              $ref: '#/components/schemas/GuestnoteModel'
           multipart/form-data:
-            schema: {}
+            schema:
+              $ref: '#/components/schemas/GuestnoteModel'
       responses:
         '201':
           content:
@@ -113,28 +116,24 @@ paths:
       - guestnotes
 components:
   schemas:
-    operationId: destroyguestnote_detail
-    description: 'Retrieve, update or delete a guest note.
-
-
-      No introspection'
-    parameters:
-    - name: id
-      in: path
-      required: true
-      description: ''
-      schema:
-        type: string
-    responses:
-      '204':
-        description: ''
-    tags:
-    - guestnotes
-    requestBody:
-      content:
-        application/json:
-          schema: {}
-        application/x-www-form-urlencoded:
-          schema: {}
-        multipart/form-data:
-          schema: {}
+    GuestnoteModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+        note:
+          type: string
+        like_tiangolo:
+          type: boolean
+        language:
+          enum:
+          - python
+          - not_python
+          - not_not_python
+          type: string
+      required:
+      - note

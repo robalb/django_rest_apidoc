@@ -8,6 +8,7 @@ from rest_framework.schemas import get_schema_view as rest_get_schema_view
 from rest_framework.schemas.inspectors import ViewInspector
 from rest_framework.schemas.openapi import AutoSchema
 from rest_framework.views import APIView
+from rest_framework.fields import empty
 import warnings
 import inspect
 
@@ -15,6 +16,7 @@ class OpenApiConfig(TypedDict):
     title: str
     description: str
     version: str
+
 
 
 def __parse_source_config(title="", description="", version="0.1.0") -> OpenApiConfig:
@@ -67,19 +69,26 @@ class OpenApiSchema(AutoSchema):
             }
     """
 
-    def get_components(self, path, method):
-        """ This is here for debugging purposes.
+    def map_field(self, field):
+        """ Extension of AutoSchema map_field, adds support for SerializerMethodField introspection
 
-        TODO: remove
+        Note: SerializerMethodField  should maintain the same type annotation as the
+              original field they are overriding.
         """
-        warnings.warn("------get_operation")
-        # print(path, method)
-        ret = super().get_components(path, method)
-        # print(ret)
-        return ret
+        if isinstance(field, serializers.SerializerMethodField):
+            # get the type annotation of the method associated to the SerializerMethodField
+            method = getattr(field.parent, field.method_name)
+            annotation = inspect.signature(method).return_annotation
 
-    #TODO
-    #def map_serializer(self, serializer)
+            # attempt to map a return type to the primitive annotation type
+            if isinstance(annotation, int):
+                return {
+                    'type': 'integer'
+                }
+            # TODO: add the rest of the primitive values
+
+        return super().map_field(field)
+
 
     def get_response_serializer(self, path, method):
         """ Attempts to detect the response serializer by inspecting method params
