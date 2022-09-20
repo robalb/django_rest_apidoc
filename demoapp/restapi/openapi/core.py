@@ -67,12 +67,19 @@ class OpenApiSchema(AutoSchema):
             }
     """
 
-    def get_operation(self, path, method):
+    def get_components(self, path, method):
+        """ This is here for debugging purposes.
+
+        TODO: remove
+        """
         warnings.warn("------get_operation")
         # print(path, method)
-        ret = super().get_operation(path, method)
+        ret = super().get_components(path, method)
         # print(ret)
         return ret
+
+    #TODO
+    #def map_serializer(self, serializer)
 
     def get_response_serializer(self, path, method):
         """ Attempts to detect the response serializer by inspecting method params
