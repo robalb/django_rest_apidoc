@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: demoapp
-          image: ghcr.io/robalb/django_rest_apidoc:sha-508c0f250176bd064031b0115c9ec8fe5e8f23af
+          image: ghcr.io/robalb/django_rest_apidoc:sha-20718c3231cfe3f0f07acf3f71472f9a1fed9dfb
           ports:
             - containerPort: 8000
       imagePullSecrets:

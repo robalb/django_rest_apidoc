@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   title: Demoapp DRF
-  version: sha-508c0f250176bd064031b0115c9ec8fe5e8f23af
+  version: sha-20718c3231cfe3f0f07acf3f71472f9a1fed9dfb
   description: A simple rest api written using DRF, with the goal of testing it's
     introspection algorithm
 paths:
